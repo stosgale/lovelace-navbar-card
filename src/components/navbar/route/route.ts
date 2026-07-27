@@ -19,17 +19,26 @@ export class Route extends BaseRoute {
     this._validateRoute();
   }
 
+  private _evaluatePopupTemplate(): PopupItem[] {
+    return processTemplate<PopupItem[]>(
+      this._navbarCard._hass,
+      this._navbarCard,
+      this._routeData.popup,
+    ) ??
+      this._routeData.popup ??
+      this._routeData.submenu ??
+      [];
+  }
+
   get popup(): Popup {
+    // When popup_cache is explicitly false, re-evaluate template on every access
+    if (this._routeData.popup_cache === false) {
+      return new Popup(this._navbarCard, this._evaluatePopupTemplate());
+    }
+    // Default: cache the Popup instance (backward-compatible behaviour)
     return (this._popupInstance ??= new Popup(
       this._navbarCard,
-      processTemplate<PopupItem[]>(
-        this._navbarCard._hass,
-        this._navbarCard,
-        this._routeData.popup,
-      ) ??
-        this._routeData.popup ??
-        this._routeData.submenu ??
-        [],
+      this._evaluatePopupTemplate(),
     ));
   }
 

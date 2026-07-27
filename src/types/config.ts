@@ -93,6 +93,11 @@ export type RouteItemBase = {
   hidden?: JSTemplatable<boolean>;
   selected?: JSTemplatable<boolean>;
   selected_color?: JSTemplatable<string>;
+  /**
+   * When false, popup templates are re-evaluated on every open.
+   * Defaults to true (cached) for performance with static popups.
+   */
+  popup_cache?: boolean;
 };
 
 // Type for popup menu items (don't include popup property to avoid circular references)
