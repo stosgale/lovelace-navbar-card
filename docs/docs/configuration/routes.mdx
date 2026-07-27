@@ -24,6 +24,7 @@ Routes represents an array of clickable icons that redirects to a given path. Ea
 | `double_tap_action` | [CustomAction](../types/custom-actions)                          | -           | Custom double_tap action configuration.                                                                                                                    |
 | `popup`             | [Popup items](#popup-items)\| [JSTemplate](../types/js-template) | -           | List of routes to display in a popup menu                                                                                                                  |
 | `hidden`            | boolean \| [JSTemplate](../types/js-template)                    | -           | Controls whether to render this route or not                                                                                                               |
+| `popup_cache`       | boolean                                                         | `true`      | When `false`, popup templates are re-evaluated on every open. Set to `false` for dynamic JSTemplate popups that need fresh data.                           |
 
 :::info
 `url` is required unless `tap_action`, `hold_action`, `double_tap_action` or `popup` is present.
