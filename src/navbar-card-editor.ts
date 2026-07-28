@@ -541,7 +541,12 @@ export class NavbarCardEditor extends LitElement {
         ? raw
         : (options.defaultValue ?? false);
     return html`
-      <div style="display: flex; align-items: center; gap: 1em;">
+      <ha-formfield .label=${options.label}>
+        ${
+          options.tooltip
+            ? this.makeHelpTooltipIcon({ tooltip: options.tooltip })
+            : ''
+        }
         <ha-switch
           .checked=${checked}
           .disabled=${options.disabled}
@@ -549,13 +554,7 @@ export class NavbarCardEditor extends LitElement {
             const isChecked = (e.target as HTMLInputElement).checked;
             this.updateConfigByKey(options.configKey, isChecked);
           }}></ha-switch>
-        ${
-          options.tooltip
-            ? this.makeHelpTooltipIcon({ tooltip: options.tooltip })
-            : ''
-        }
-        <label>${options.label}</label>
-      </div>
+      </ha-formfield>
     `;
   }
 
