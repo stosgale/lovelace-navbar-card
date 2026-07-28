@@ -855,6 +855,16 @@ export class NavbarCardEditor extends LitElement {
                             })}`
                       }
                     </div>
+                    ${
+                      this.makeSwitch({
+                        configKey:
+                          `${baseConfigKey}.popup_cache` as any,
+                        defaultValue: true,
+                        label: 'Cache popup template',
+                        tooltip:
+                          'Disable to re-evaluate popup templates on every open for dynamic content. Keep enabled for static popups.',
+                      })
+                    }
                   </ha-expansion-panel>
                 `
                 : html``
@@ -879,18 +889,6 @@ export class NavbarCardEditor extends LitElement {
                         inputType: 'switch',
                         label: 'Selected',
                         templateHelper: BOOLEAN_JS_TEMPLATE_HELPER,
-                      })
-                    : html``
-                }
-                ${
-                  !isPopup && (item as RouteItem).popup
-                    ? this.makeSwitch({
-                        configKey:
-                          `${baseConfigKey}.popup_cache` as any,
-                        defaultValue: true,
-                        label: 'Cache popup template',
-                        tooltip:
-                          'Disable to re-evaluate popup templates on every open for dynamic content. Keep enabled for static popups.',
                       })
                     : html``
                 }
