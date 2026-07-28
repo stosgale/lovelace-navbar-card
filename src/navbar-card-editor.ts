@@ -880,6 +880,17 @@ export class NavbarCardEditor extends LitElement {
                       })
                     : html``
                 }
+                ${
+                  !isPopup && (item as RouteItem).popup
+                    ? this.makeSwitch({
+                        configKey: `${baseConfigKey}.popup_cache` as any,
+                        defaultValue: true,
+                        label: 'Cache popup template',
+                        tooltip:
+                          'When disabled, popup templates are re-evaluated on every open. Enable for static popups (performance), disable for dynamic JSTemplate popups that need fresh data.',
+                      })
+                    : html``
+                }
               </div>
             </ha-expansion-panel>
 
