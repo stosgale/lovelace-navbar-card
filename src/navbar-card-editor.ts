@@ -535,17 +535,19 @@ export class NavbarCardEditor extends LitElement {
     tooltip?: string | TemplateResult;
     defaultValue?: boolean;
   }) {
+    const raw = genericGetProperty(this._config, options.configKey);
+    const checked =
+      raw !== undefined && raw !== null
+        ? raw
+        : (options.defaultValue ?? false);
     return html`
       <div style="display: flex; align-items: center; gap: 1em;">
         <ha-switch
-          .checked=${
-            genericGetProperty(this._config, options.configKey) ??
-            options.defaultValue
-          }
+          .checked=${checked}
           .disabled=${options.disabled}
           @change=${(e: Event) => {
-            const checked = (e.target as HTMLInputElement).checked;
-            this.updateConfigByKey(options.configKey, checked);
+            const isChecked = (e.target as HTMLInputElement).checked;
+            this.updateConfigByKey(options.configKey, isChecked);
           }}></ha-switch>
         ${
           options.tooltip
@@ -883,11 +885,12 @@ export class NavbarCardEditor extends LitElement {
                 ${
                   !isPopup && (item as RouteItem).popup
                     ? this.makeSwitch({
-                        configKey: `${baseConfigKey}.popup_cache` as any,
+                        configKey:
+                          `${baseConfigKey}.popup_cache` as any,
                         defaultValue: true,
                         label: 'Cache popup template',
                         tooltip:
-                          'When disabled, popup templates are re-evaluated on every open. Enable for static popups (performance), disable for dynamic JSTemplate popups that need fresh data.',
+                          'Disable to re-evaluate popup templates on every open for dynamic content. Keep enabled for static popups.',
                       })
                     : html``
                 }
